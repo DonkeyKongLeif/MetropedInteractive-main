@@ -15,21 +15,27 @@ public class Move : MonoBehaviour
     public float accelleration = 0.04f;
 
     private bool brake;
+    private bool returning = false;
     private bool isStationary = false;
-    public float timeBeforeOpen = 3;
-    public float timeWhileOpen = 3;
-    public float timeAfterClose = 3;
+    public float timeBeforeOpen = 5;
+    public float timeWhileOpen = 10;
+    public float timeAfterClose = 5;
+
+    public GameObject doors_parent;
+    private Animator[] doorAnimators;
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        // originalPos = transform.position;
-        originalPos = new Vector3(-40, transform.position.y, transform.position.z);
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+
+        Vector3 originalPos = new Vector3(-40, transform.position.y, transform.position.z);
+
+        doorAnimators = doors_parent.GetComponentsInChildren<Animator>();
     }
 
     void Update()
     {
-        if (transform.position.x < 170)
+        if (!returning)
         {
             if (speed > 0 && brake) {
                 // Debug.Log("Braking");
@@ -45,10 +51,12 @@ public class Move : MonoBehaviour
         }
         else
         {
+            speed = 0;
             timer += Time.deltaTime;
 
             if (timer >= returnInterval)
             {
+                returning = false;
                 transform.position = originalPos;
                 speed = topSpeed;
                 timer = 0f;
@@ -74,14 +82,22 @@ public class Move : MonoBehaviour
 
     void OpenDoors() {
         Debug.Log("Opening Doors");
+        foreach (Animator anim in doorAnimators) {   
+            anim.SetBool("isOpen", true);
+        }
     }
 
     void CloseDoors() {
         Debug.Log("Closing Doors");
+        foreach (Animator anim in doorAnimators) {   
+            anim.SetBool("isOpen", false);
+        }
     }
 
     void OnTriggerEnter(Collider collision) {
-        if (collision.CompareTag("BrakePoint")) {brake = true;}
+        if (collision.CompareTag("BrakePoint")) {brake = true;
         Debug.Log("Breakpint hit");
+        }
+        else if (collision.CompareTag("ReturnPoint")) {returning = true;}
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - girl
   - PostProcessing
   - BrakePoint
+  - ReturnPoint
   layers:
   - Default
   - TransparentFX
