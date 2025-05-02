@@ -8,7 +8,6 @@ public class Move : MonoBehaviour
     private float returnInterval = 3f; 
     private MeshRenderer meshRenderer;
     Vector3 originalPos;
-    public Vector3 stopPos;
 
     public float speed = 10f;
     public float topSpeed = 10f;
@@ -28,7 +27,7 @@ public class Move : MonoBehaviour
     {
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
 
-        Vector3 originalPos = new Vector3(-40, transform.position.y, transform.position.z);
+        originalPos = new Vector3(-60, transform.position.y, transform.position.z);
 
         doorAnimators = doors_parent.GetComponentsInChildren<Animator>();
     }
