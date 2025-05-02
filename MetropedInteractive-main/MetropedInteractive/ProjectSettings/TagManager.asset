@@ -10,6 +10,9 @@ TagManager:
   - female
   - girl
   - PostProcessing
+  - Character
+  - ReturnPoint
+  - BrakePoint
   layers:
   - Default
   - TransparentFX
