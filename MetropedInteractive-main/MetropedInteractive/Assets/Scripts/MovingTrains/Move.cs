@@ -23,6 +23,11 @@ public class Move : MonoBehaviour
     public GameObject doors_parent;
     private Animator[] doorAnimators;
 
+    private AudioSource audiosource;
+    public AudioClip train_arriving;
+    public AudioClip train_leaving;
+    public AudioClip train_breathing;
+
     void Start()
     {
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
@@ -30,6 +35,8 @@ public class Move : MonoBehaviour
         originalPos = new Vector3(-60, transform.position.y, transform.position.z);
 
         doorAnimators = doors_parent.GetComponentsInChildren<Animator>();
+
+        audiosource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,14 +45,25 @@ public class Move : MonoBehaviour
         {
             if (speed > 0 && brake) {
                 // Debug.Log("Braking");
+                // Train arriving sound
+                audiosource.clip = train_arriving;
+                audiosource.Play();
                 speed -= accelleration;
             } else if (speed <= 0 && brake && !isStationary) {
                 // Debug.Log("Stopped");
                 speed = 0;
+                // Train stationary sound
+                audiosource.clip = train_breathing;
+                audiosource.Play();
                 StartStationary();
             }
 
-            if(speed < topSpeed && !brake) {speed += accelleration;}
+            if(speed < topSpeed && !brake) {
+                speed += accelleration;
+                // train leaving sound
+                audiosource.clip = train_leaving;
+                audiosource.Play();
+                }
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
         else
