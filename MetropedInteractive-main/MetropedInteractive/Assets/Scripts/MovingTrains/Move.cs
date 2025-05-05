@@ -119,6 +119,7 @@ public class Move : MonoBehaviour
         else if (collision.CompareTag("ReturnPoint")) {
             returning = true;
             Debug.Log("Return point hit");
+            audiosource.Stop();
         }
     }
 }
