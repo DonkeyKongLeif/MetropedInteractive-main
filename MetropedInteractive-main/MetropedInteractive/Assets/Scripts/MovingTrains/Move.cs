@@ -28,14 +28,14 @@ public class Move : MonoBehaviour
     public AudioClip train_leaving;
     public AudioClip train_breathing;
 
+    private bool hasPlayedArriving = false;
+    private bool hasPlayedLeaving = false;
+
     void Start()
     {
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-
+        meshRenderer = GetComponent<MeshRenderer>();
         originalPos = new Vector3(-60, transform.position.y, transform.position.z);
-
         doorAnimators = doors_parent.GetComponentsInChildren<Animator>();
-
         audiosource = GetComponent<AudioSource>();
     }
 
@@ -44,26 +44,29 @@ public class Move : MonoBehaviour
         if (!returning)
         {
             if (speed > 0 && brake) {
-                // Debug.Log("Braking");
-                // Train arriving sound
-                audiosource.clip = train_arriving;
-                audiosource.Play();
+                if (!hasPlayedArriving) {
+                    audiosource.clip = train_arriving;
+                    audiosource.Play();
+                    hasPlayedArriving = true;
+                }
                 speed -= accelleration;
-            } else if (speed <= 0 && brake && !isStationary) {
-                // Debug.Log("Stopped");
+            } 
+            else if (speed <= 0 && brake && !isStationary) {
                 speed = 0;
-                // Train stationary sound
                 audiosource.clip = train_breathing;
                 audiosource.Play();
                 StartStationary();
             }
 
-            if(speed < topSpeed && !brake) {
+            if (speed < topSpeed && !brake) {
                 speed += accelleration;
-                // train leaving sound
-                audiosource.clip = train_leaving;
-                audiosource.Play();
+                if (!hasPlayedLeaving) {
+                    audiosource.clip = train_leaving;
+                    audiosource.Play();
+                    hasPlayedLeaving = true;
                 }
+            }
+
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
         else
@@ -77,6 +80,10 @@ public class Move : MonoBehaviour
                 transform.position = originalPos;
                 speed = topSpeed;
                 timer = 0f;
+
+                // Reset flags so sounds can play again on next approach
+                hasPlayedArriving = false;
+                hasPlayedLeaving = false;
             }
         }
     }
