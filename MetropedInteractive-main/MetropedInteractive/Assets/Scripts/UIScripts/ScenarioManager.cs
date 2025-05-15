@@ -247,7 +247,7 @@ public class ScenarioPicker : MonoBehaviour
 
     private IEnumerator TimerCoroutine()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(30);
         if (RatingMenu != null)
         {
             RatingMenu.SetActive(true);
