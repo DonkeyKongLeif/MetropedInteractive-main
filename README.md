@@ -15,7 +15,9 @@ The results are then saved locally to a JSON file (The adress of this file is wr
 The participant will be able to move through the scene with the WASD keys and in VR.
 There are also moving trains and a virtual crowd that move through the scene.
 
-![image](https://github.com/DonkeyKongLeif/MetropedInteractive-main/blob/main/2025-05-16%20(1).png)
+https://github.com/user-attachments/assets/60359daa-a1b3-4510-b293-4a6546c31c79
+
+
 
 # Installation Instructions
 - Install Unity Hub on your computer.
