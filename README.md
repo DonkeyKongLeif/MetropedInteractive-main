@@ -47,3 +47,5 @@ Julian Ley
 
 (contact@julianley.com)
 
+Originally made by Julian Ley, with some contributions by: Samuel Hörnell, Max Wahlman, Johanna Plant, Astrid Land, Alice Oleskog, Carl Tobiasson, Simon Pohjalainen and Lutz Hahlbeck
+
